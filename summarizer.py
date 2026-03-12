@@ -22,11 +22,13 @@ ANALYSIS_PROMPT = """\
 아래 논문을 읽고, 반드시 지정된 JSON 형식으로만 응답하세요. 다른 설명 없이 JSON만 출력하세요.
 
 [연구 맥락 — 이 논문의 활용 목적]
-- 연구 주제: 직장 내 부당대우 → 정서적 소진 → 일의 의미감
+- 연구 주제: 직장 내 부당대우 → 정서적 소진 → 일의 의미감의 매개 경로를, person-level 직무소진(job burnout)이 조절하는 조절된 매개 모형
 - 이론 프레임: COR theory (Hobfoll), JD-R model (Bakker & Demerouti)
 - 조절변인: 직무 소진 (job burnout, person-level)
 - 연구 대상: 한국 간호사/의료 종사자
 - 분석 방법: DSEM (다층 구조방정식모형), 일기 연구
+- 핵심 주장은 5~7개, 인용 문장은 4~5개 추출하세요.
+- 조절 효과(moderating effect)가 있으면 반드시 별도로 추출하고, 없으면 "해당 없음"으로 표기하세요.
 
 [서지정보 (참고용)]
 - 파일명: {file_name}
@@ -50,11 +52,12 @@ ANALYSIS_PROMPT = """\
   "doi": "DOI (없으면 빈 문자열)",
   "one_line": "한 문장 핵심 요약 (한국어)",
   "abstract": "초록 전문 또는 요약 (영어, 원문 그대로)",
-  "key_claims_en": ["핵심 주장 1 (영어)", "핵심 주장 2", "핵심 주장 3"],
-  "key_claims_ko": ["핵심 주장 1 (한국어)", "핵심 주장 2", "핵심 주장 3"],
+  "key_claims_en": ["핵심 주장 1 (영어)", "주장 2", "주장 3", "주장 4", "주장 5"],
+  "key_claims_ko": ["핵심 주장 1 (한국어)", "주장 2", "주장 3", "주장 4", "주장 5"],
+  "moderation": "조절 효과 관련 내용 (한국어: 조절변인, 조절 방향, 유의성 여부. 없으면 '해당 없음')",
   "method": "연구 방법론 요약 (한국어: 설계, 표본, 측정도구, 분석방법)",
   "connection": "내 연구와의 연결점 (한국어: COR, JD-R, 부당대우, EE, WM, burnout, DSEM 중 관련 개념)",
-  "excerpts": ["직접 인용할 만한 영어 문장 1", "영어 문장 2"],
+  "excerpts": ["직접 인용할 만한 영어 문장 1", "문장 2", "문장 3", "문장 4", "문장 5"],
   "tags": ["tag1", "tag2", "tag3"]
 }}
 """
@@ -129,6 +132,7 @@ def _fallback_summary(paper: dict) -> dict:
         "abstract": paper.get("abstract", "[초록 추출 실패]"),
         "key_claims_en": [],
         "key_claims_ko": [],
+        "moderation": "[직접 작성]",
         "method": "[직접 작성]",
         "connection": "[직접 작성]",
         "excerpts": [],
