@@ -17,9 +17,9 @@ from datetime import datetime
 from pathlib import Path
 
 from config import REFERENCE_ROOT, TARGET_FOLDERS, JSON_PATH, MARKDOWN_DIR
-from extractor import extract_one
-from summarizer import summarize_paper
-from markdown_gen import generate_markdown
+from agents.pdf_summarizer.extractor import extract_one
+from agents.pdf_summarizer.summarizer import summarize_paper
+from agents.pdf_summarizer.markdown_gen import generate_markdown
 
 
 # ── 이력 관리 ─────────────────────────────────────────────────────────

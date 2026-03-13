@@ -149,7 +149,7 @@ def summarize_paper(paper: dict) -> dict:
     Returns:
         요약 딕셔너리 (API 실패 시 fallback 반환)
     """
-    from extractor import is_thesis
+    from agents.pdf_summarizer.extractor import is_thesis
 
     fallback = _fallback_summary(paper)
 
