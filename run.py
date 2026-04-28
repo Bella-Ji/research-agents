@@ -2,13 +2,18 @@
 run.py — research-agents 통합 실행 진입점
 
 사용법:
-  python run.py pdf --batch           # PDF 요약 에이전트 (전체 일괄)
-  python run.py pdf --pick            # PDF 요약 에이전트 (대화형 선택)
-  python run.py pdf --single "경로"  # PDF 요약 에이전트 (단일 파일)
-  python run.py pdf --watch           # PDF 요약 에이전트 (폴더 감시)
-  python run.py search                # 문헌 탐색 에이전트 (대화형)
-  python run.py search "키워드"      # 문헌 탐색 에이전트 (키워드 직접 전달)
-  python run.py tag                   # 이론 태그 추가 도구
+  python run.py pdf --batch              # PDF 요약 에이전트 (전체 일괄)
+  python run.py pdf --pick               # PDF 요약 에이전트 (대화형 선택)
+  python run.py pdf --single "경로"     # PDF 요약 에이전트 (단일 파일)
+  python run.py pdf --watch              # PDF 요약 에이전트 (폴더 감시)
+  python run.py search                   # 문헌 탐색 에이전트 (대화형)
+  python run.py search "키워드"         # 문헌 탐색 에이전트 (키워드 직접 전달)
+  python run.py tag                      # 이론 태그 추가 도구
+  python run.py cite --file "경로.md"                        # 인텍스트 검사 (단일)
+  python run.py cite --all                                    # 인텍스트 검사 (전체 초안)
+  python run.py cite --ref "draft/10. reference.md"           # 참고문헌 목록 검사
+  python run.py cite --all --ref "draft/10. reference.md"     # 전체 교차 검사
+  python run.py cite --all --ref "draft/10. reference.md" --save  # 결과 저장
 """
 
 import io
@@ -42,6 +47,11 @@ def main():
     elif command == "tag":
         from tools.theory_tagger import main as tag_main
         tag_main()
+
+    elif command == "cite":
+        from agents.citation_checker.main import main as cite_main
+        sys.argv = [sys.argv[0]] + sys.argv[2:]
+        cite_main()
 
     else:
         print(f"알 수 없는 명령어: {command}")

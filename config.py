@@ -42,6 +42,10 @@ REFERENCE_ROOT = _require_path("REFERENCE_ROOT", "02. reference 폴더 루트 �
 MARKDOWN_DIR   = _require_path("MARKDOWN_DIR",   "MD 파일 저장 폴더 (Obsidian 내 별도 폴더)")
 JSON_PATH      = REFERENCE_ROOT / ".conversion_history.json"
 
+# ── citation_checker 전용 경로 ────────────────────────────────────────
+BIB_PATH   = Path(os.getenv("BIB_PATH",   str(REFERENCE_ROOT / "library.bib")))
+DRAFT_ROOT = Path(os.getenv("DRAFT_ROOT", str(REFERENCE_ROOT.parent / "01. 논문 작성")))
+
 # ── API 설정 ──────────────────────────────────────────────────────────
 ANTHROPIC_API_KEY   = _require_env("ANTHROPIC_API_KEY", "Anthropic API 키")
 CLAUDE_MODEL        = os.getenv("CLAUDE_MODEL", "claude-opus-4-5")
@@ -126,6 +130,9 @@ source_pdf: "{pdf_filename}"
 
 ## 📎 인용 가능한 문장
 {excerpts}
+
+## 💡 새로운 연구 아이디어
+{new_research_ideas}
 
 ## 📝 내 메모
 > [이 논문에 대한 개인적인 생각, 비평, 질문 등 — 직접 작성]

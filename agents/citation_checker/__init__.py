@@ -1,2 +1,11 @@
-# 인용 형식 확인 에이전트 (미구현)
-# 계획: APA 7판 기준 인용 형식 일괄 점검 및 자동 수정
+"""citation_checker — APA 7판 인용 형식 검사 에이전트"""
+
+from .bib_loader import load_bib, build_index, BibEntry
+from .parser import extract_citations, Citation
+from .checker import check_citation, CiteError
+
+__all__ = [
+    "load_bib", "build_index", "BibEntry",
+    "extract_citations", "Citation",
+    "check_citation", "CiteError",
+]
