@@ -14,6 +14,8 @@ run.py — research-agents 통합 실행 진입점
   python run.py cite --ref "draft/10. reference.md"           # 참고문헌 목록 검사
   python run.py cite --all --ref "draft/10. reference.md"     # 전체 교차 검사
   python run.py cite --all --ref "draft/10. reference.md" --save  # 결과 저장
+  python run.py writing --analyze "경로/논문.pdf"             # 글쓰기 방식 분석
+  python run.py writing --analyze "경로/논문.pdf" --sections introduction method  # 특정 섹션만
 """
 
 import io
@@ -52,6 +54,11 @@ def main():
         from agents.citation_checker.main import main as cite_main
         sys.argv = [sys.argv[0]] + sys.argv[2:]
         cite_main()
+
+    elif command == "writing":
+        from agents.writing_analyzer.main import main as writing_main
+        sys.argv = [sys.argv[0]] + sys.argv[2:]
+        writing_main()
 
     else:
         print(f"알 수 없는 명령어: {command}")

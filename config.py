@@ -46,6 +46,14 @@ JSON_PATH      = REFERENCE_ROOT / ".conversion_history.json"
 BIB_PATH   = Path(os.getenv("BIB_PATH",   str(REFERENCE_ROOT / "library.bib")))
 DRAFT_ROOT = Path(os.getenv("DRAFT_ROOT", str(REFERENCE_ROOT.parent / "01. 논문 작성")))
 
+# ── writing_analyzer 전용 설정 ────────────────────────────────────────
+WRITING_ANALYSIS_DIR = Path(os.getenv(
+    "WRITING_ANALYSIS_DIR",
+    str(REFERENCE_ROOT.parent / "01. 논문 작성" / "writing_analysis"),
+))
+DRAFT_DIR    = Path(os.getenv("DRAFT_DIR", ""))
+CURRENT_PAPER = os.getenv("CURRENT_PAPER", "WM paper")
+
 # ── API 설정 ──────────────────────────────────────────────────────────
 ANTHROPIC_API_KEY   = _require_env("ANTHROPIC_API_KEY", "Anthropic API 키")
 CLAUDE_MODEL        = os.getenv("CLAUDE_MODEL", "claude-opus-4-5")
