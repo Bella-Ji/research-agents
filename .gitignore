@@ -2,3 +2,7 @@
 .conversion_history.json
 __pycache__/
 *.pyc
+watch.log
+.space/
+agents/progress.md
+agents/claude-scientific-writer/
