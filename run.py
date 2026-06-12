@@ -6,6 +6,13 @@ run.py — research-agents 통합 실행 진입점
   python run.py pdf --pick               # PDF 요약 에이전트 (대화형 선택)
   python run.py pdf --single "경로"     # PDF 요약 에이전트 (단일 파일)
   python run.py pdf --watch              # PDF 요약 에이전트 (폴더 감시)
+  python run.py gap --batch              # 갭 탐색 에이전트 (전체 일괄)
+  python run.py gap --pick               # 갭 탐색 에이전트 (대화형 선택)
+  python run.py gap --single "경로"     # 갭 탐색 에이전트 (단일 파일)
+  python run.py gap --watch              # 갭 탐색 에이전트 (폴더 감시)
+  python run.py synth --pick             # 갭 종합 분석 (논문 선택)
+  python run.py synth --folder "폴더명" # 갭 종합 분석 (특정 폴더)
+  python run.py synth --all              # 갭 종합 분석 (전체)
   python run.py search                   # 문헌 탐색 에이전트 (대화형)
   python run.py search "키워드"         # 문헌 탐색 에이전트 (키워드 직접 전달)
   python run.py tag                      # 이론 태그 추가 도구
@@ -16,6 +23,9 @@ run.py — research-agents 통합 실행 진입점
   python run.py cite --all --ref "draft/10. reference.md" --save  # 결과 저장
   python run.py writing --analyze "경로/논문.pdf"             # 글쓰기 방식 분석
   python run.py writing --analyze "경로/논문.pdf" --sections introduction method  # 특정 섹션만
+  python run.py strategy --latest                              # 갭 전략 분석 (최근 지형 지도)
+  python run.py strategy --pick                               # 갭 전략 분석 (지형 지도 선택)
+  python run.py strategy --all                                # 갭 전략 분석 (전체 지형 지도)
 """
 
 import io
@@ -39,6 +49,16 @@ def main():
         sys.argv = [sys.argv[0]] + sys.argv[2:]
         pdf_main()
 
+    elif command == "gap":
+        from agents.gap_explorer.main import main as gap_main
+        sys.argv = [sys.argv[0]] + sys.argv[2:]
+        gap_main()
+
+    elif command == "synth":
+        from agents.gap_synthesizer.main import main as synth_main
+        sys.argv = [sys.argv[0]] + sys.argv[2:]
+        synth_main()
+
     elif command == "search":
         from agents.lit_search.agent import main as search_main
         if len(sys.argv) > 2:
@@ -59,6 +79,11 @@ def main():
         from agents.writing_analyzer.main import main as writing_main
         sys.argv = [sys.argv[0]] + sys.argv[2:]
         writing_main()
+
+    elif command == "strategy":
+        from agents.gap_strategist.main import main as strategy_main
+        sys.argv = [sys.argv[0]] + sys.argv[2:]
+        strategy_main()
 
     else:
         print(f"알 수 없는 명령어: {command}")
