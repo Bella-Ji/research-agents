@@ -82,6 +82,7 @@ def generate_markdown(summary: dict, paper: dict) -> Path | None:
         method        = summary.get("method", ""),
         connection    = summary.get("connection", ""),
         excerpts      = _to_quotes(summary.get("excerpts", [])),
+        new_research_ideas = summary.get("new_research_ideas", "[직접 작성]"),
     )
 
     md_path.write_text(content, encoding="utf-8")

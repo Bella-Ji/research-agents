@@ -58,7 +58,8 @@ ANALYSIS_PROMPT = """\
   "method": "연구 방법론 요약 (한국어: 설계, 표본, 측정도구, 분석방법)",
   "connection": "내 연구와의 연결점 (한국어: COR, JD-R, 부당대우, EE, WM, burnout, DSEM 중 관련 개념)",
   "excerpts": ["직접 인용할 만한 영어 문장 1", "문장 2", "문장 3", "문장 4", "문장 5"],
-  "tags": ["tag1", "tag2", "tag3"]
+  "tags": ["tag1", "tag2", "tag3"],
+  "new_research_ideas": "변인사전.md 기반으로 변인 조합 구체적으로 제안 (한국어: 보유 변인인 t_MPFs/MBSs/MBCs, t_EE, t_JC, ND_WM, ND_REC, ND_SBR, jb_SQ, p_JB, PSC, PCEO/PCEF 등을 활용한 새로운 연구 설계 아이디어 3~5개. 각 아이디어는 '변인A → 변인B (조절: 변인C)' 형태로 구체적으로 제시)"
 }}
 """
 
@@ -82,7 +83,7 @@ def _call_claude(prompt: str) -> str | None:
         client = _get_client()
         message = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=2500,
+            max_tokens=4000,
             messages=[{"role": "user", "content": prompt}],
         )
         time.sleep(CLAUDE_REQUEST_DELAY)
@@ -137,6 +138,7 @@ def _fallback_summary(paper: dict) -> dict:
         "connection": "[직접 작성]",
         "excerpts": [],
         "tags": [paper.get("source_folder", "").replace(" ", "-")],
+        "new_research_ideas": "[직접 작성]",
     }
 
 

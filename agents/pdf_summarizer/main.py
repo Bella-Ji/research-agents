@@ -191,13 +191,13 @@ def run_pick():
 def run_watch():
     """새 PDF 자동 감시"""
     try:
-        from watchdog.observers import Observer
+        from watchdog.observers.polling import PollingObserver as Observer
         from watchdog.events import FileSystemEventHandler
     except ImportError:
         import subprocess
         subprocess.check_call([sys.executable, "-m", "pip", "install", "watchdog",
                                "--break-system-packages", "-q"])
-        from watchdog.observers import Observer
+        from watchdog.observers.polling import PollingObserver as Observer
         from watchdog.events import FileSystemEventHandler
 
     history = load_history()
