@@ -136,7 +136,7 @@ def generate_revision_report(
 
     save_dir = output_dir / current_paper
     save_dir.mkdir(parents=True, exist_ok=True)
-    md_path = save_dir / "revise_output.md"
+    md_path = save_dir / f"revise_output_{section_key}.md"
 
     section_display = SECTION_DISPLAY.get(section_key, section_key)
 

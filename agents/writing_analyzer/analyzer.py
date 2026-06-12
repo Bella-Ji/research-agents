@@ -177,12 +177,12 @@ def _get_client() -> anthropic.Anthropic:
     return _client_cache
 
 
-def _call_claude(prompt: str) -> str | None:
+def _call_claude(prompt: str, max_tokens: int = 2000) -> str | None:
     try:
         client = _get_client()
         message = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=2000,
+            max_tokens=max_tokens,
             messages=[{"role": "user", "content": prompt}],
         )
         time.sleep(CLAUDE_REQUEST_DELAY)
@@ -308,13 +308,14 @@ def synthesize_and_coach(
         my_draft=my_draft[:MAX_DRAFT_TEXT],
     )
 
-    raw = _call_claude(prompt)
+    raw = _call_claude(prompt, max_tokens=4096)
     if not raw:
         return None
 
     parsed = _parse_json(raw)
     if not parsed:
         print("  [경고] 종합 코칭 JSON 파싱 실패")
+        print(f"  [디버그] 응답 끝부분: ...{raw[-300:]}")
         return None
 
     return parsed
@@ -396,13 +397,14 @@ def revise_paragraph(
         paragraph=paragraph,
     )
 
-    raw = _call_claude(prompt)
+    raw = _call_claude(prompt, max_tokens=4096)
     if not raw:
         return None
 
     parsed = _parse_json(raw)
     if not parsed:
         print("  [경고] 수정 제안 JSON 파싱 실패")
+        print(f"  [디버그] 응답 끝부분: ...{raw[-300:]}")
         return None
 
     return parsed
