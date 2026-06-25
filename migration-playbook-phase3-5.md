@@ -215,6 +215,7 @@ PRD Phase 5 진행해줘.
 ```
 
 ### 5-3. [직접] 마감 결정
+
 - 라우팅 3건 정확 → 마이그레이션 완료. [프롬프트]:
 ```
 Phase 5 git commit ("Phase 5: writing-analyzer, 오케스트레이터 정비 —
@@ -225,6 +226,55 @@ Phase 5 git commit ("Phase 5: writing-analyzer, 오케스트레이터 정비 —
     제외하고 archive/로 이동해줘 (삭제 금지)"
   ② 외부 플러그인: "claude-scientific-writer에서 citation-management,
     scientific-writing, peer-review 스킬만 .claude/skills/로 복사"
+
+### 5-4. [프롬프트] 사용 가이드 README 생성 (마이그레이션 최종 산출물)
+
+```
+마이그레이션이 완료됐으니 루트 README.md를 사용 가이드로 재작성해줘.
+기존 README.md는 README_python.md로 이름 변경해 보존 (구 시스템 참고용).
+새 README는 "이 시스템을 처음 보는 미래의 나"가 읽는다고 가정하고,
+실제로 구현된 최종 상태 기준으로 정확하게 작성해 (PRD의 계획이 아니라
+.claude/ 안의 실제 파일들을 읽고 쓸 것). 포함할 내용:
+
+1. 시스템 한눈에 보기
+   - 3층 구조 설명: 커맨드(/...)가 에이전트를 호출하고, 에이전트가
+     context·스킬을 참조한다
+   - 전체 에이전트 목록과 한 줄 역할, 사용 모델(haiku 지정 여부 포함)
+
+2. 빠른 시작
+   - 폴더 진입 + claude 실행 (경로 포함)
+   - 이어하기: claude --continue
+   - /agents로 에이전트 확인
+
+3. 사용법 3가지 (각각 실제 예시 2개 이상)
+   a. 슬래시 커맨드: 6개 커맨드 전체의 문법·인자·기본값·산출물
+      위치를 표로 (예: /find-gaps [폴더, 생략 시 phd/] → 갭분석.md +
+      gap_landscape_*.md + gap_strategy_*.md)
+   b. 자연어: CLAUDE.md 라우팅 트리거 문구 예시
+   c. 에이전트 직접 지명: 파이프라인 중 한 단계만 재실행하는 예시
+
+4. 대표 워크플로우 시나리오 3개 (처음부터 끝까지)
+   - 새 논문 1편 받았을 때: 요약 → vault 연관 논문 확인
+   - 연구 주제 탐색: 폴더 단위 /find-gaps → strategy 파일 읽는 법
+   - 초안 검토: /check-citations → /review-draft → /coach-writing --revise
+
+5. context 파일 관리 규칙
+   - 3개 파일의 역할과 SSOT 원칙
+   - 변인사전이 바뀌면 어디를 고쳐야 하는지 (옵시디언 원본 → context
+     동기화 절차)
+
+6. 산출물 위치 지도: 어떤 작업이 어떤 폴더에 뭘 만드는지 한 표로
+
+7. 문제 해결
+   - 에이전트 인식 안 됨 → 재시작
+   - 인용 자체검증 실패 보고가 뜰 때 의미
+   - 기존 Python 시스템(run.py)으로 같은 작업 돌리는 법 (병행 기간용)
+
+작성 후 git commit ("docs: 사용 가이드 README") + push까지.
+```
+
+> [직접] 받은 README를 한 번 통독하면서 실제와 다른 부분(특히 산출물
+> 경로, 커맨드 인자)이 있는지 확인 — 이 문서가 앞으로의 매뉴얼이 됨.
 
 ---
 
