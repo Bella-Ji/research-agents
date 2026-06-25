@@ -189,6 +189,9 @@ PRD Phase 5 진행해줘.
    2단계 구조 유지. 기준 파일이 없으면 --multi 먼저 실행하라고 안내.
 3. good_papers 폴더 경로는 config.py 설정 따름.
 
+⚠️ CLAUDE.md에 fablize always-on 블록(<!-- FABLIZE:BEGIN -->~<!-- FABLIZE:END -->)이
+있다. 재작성 시 이 블록은 그대로 보존하고 건드리지 말 것.
+
 [CLAUDE.md 오케스트레이터 재작성]
 1. 기존 CLAUDE.md를 CLAUDE.md.bak으로 백업 후 재작성:
    - 6개 slash command와 에이전트들의 역할 한 줄 요약 + 라우팅 기준
