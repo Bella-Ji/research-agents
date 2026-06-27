@@ -80,7 +80,7 @@ def normalize_name(name: str) -> str:
     name = name.lower()
     table = str.maketrans(
         "áàäâãéèëêíìïîóòöôõúùüûñç",
-        "aaaaaeeeeiiiioooooouuuunc",
+        "aaaaaeeeeiiiiooooouuuunc",
     )
     name = name.translate(table)
     return re.sub(r"[^a-z]", "", name)
