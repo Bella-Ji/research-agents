@@ -31,7 +31,7 @@ gap_synthesizer가 만든 `gap_landscape_*.md`를 읽어서:
 
 ## 🧩 제안 모형
 M1 — 모형명 🔴 High
-- 경로: t_EE[AW_t] → ND_REC[BW_t] → ND_WM[BW_t]
+- 경로: t_EE[AW_t] → ND_REC[BW_{t+1}] → ND_WM[BW_{t+1}]
 - 분석 방법: DSEM_mediation
 - 교차지연 가능: ✅ ...
 
@@ -47,7 +47,8 @@ M1 — 모형명 🔴 High
 |---|---|
 | AW 변인 ↔ AW 변인 (동시점) | ✅ 가능 |
 | AW 변인 → BW 변인 (lag-1) | ✅ 가능 |
-| BW 변인 → AW 변인 | ❌ 시간 역행 |
+| 같은 관찰쌍의 BW 변인 → AW 변인 | ❌ 시간 역행 |
+| 다음 관찰쌍의 BW_t → AW_t+1 | ⚠️ 시간 순방향이므로 별도 판단 |
 | ND_REC ↔ ND_SBR | ❌ 불가 (암묵적 시간 선행) |
 
 ### 자동 제외 경로

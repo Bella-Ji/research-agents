@@ -18,7 +18,14 @@ from config import (
 
 VARIABLE_DICT = """\
 [연구자 보유 데이터]
-설계: 일기연구 (AW-BW 교대 설계, 약 31일, person N=284, 한국 간호사 표본)
+설계: 일기연구 (AW-BW 교대 설계, 약 31일, 한국 간호사 표본; person N은 연구/분석 버전별 확인)
+
+[현재 연구 방향 — 2026-09-22 연구자 설명]
+연구 2는 미확정이며 MSEM 모형 8이 유력 후보다.
+매일 수준 요구·자원크래프팅 → 정서적 소진 → 회복경험의 1단계를 개인수준 PSC가 조절한다.
+연구 2의 최종 N과 관찰 수는 미정이다. 268명·284명 분석 버전을 확정 표본으로 간주하지 않는다.
+기존 DSEM 탐색은 학위논문에 포함할 만한 결과를 얻지 못했으므로 연구 2를 DSEM으로 전제하지 않는다.
+현재 상태와 원본 위치의 기준: .claude/context/research-profile.md.
 
 ── Level 1 (Within-person, 매일) ──
 AW 변인 (퇴근 후 설문, 당일 경험):
@@ -43,7 +50,7 @@ BW 변인 (다음날 출근 전 설문):
   - 근무특성: C1(병원종류), C4(근무부서), respon(직책), duty(근무형태), night
 
 ── 가능한 분석 방법 ──
-  - MSEM: 다층 SEM (횡단, 동시점)
+  - MSEM: 다층 SEM (분석 수준·측정 시점은 연구별 설계에 따라 명시)
   - MSEM+moderation: Cross-level interaction
   - DSEM_cross-lag: 자기회귀 + 교차지연 경로
   - DSEM_mediation: lag-1 시간 매개
@@ -56,16 +63,17 @@ CROSSLAG_RULES = """\
 ✅ 가능:
   - AW 변인 ↔ AW 변인 (동시점, 교차지연 가능): 부당대우, t_EE, t_JC, t_ABRC, t_ABDC
   - AW 변인 → BW 변인 (24시간 lag-1, 순방향 가능): t_EE→ND_WM, t_EE→ND_REC 등
-  - ND_REC ↔ AW 변인 교차지연 가능 (ND_REC는 전날 밤 회고 = AW와 실질적 동시점)
+  - AW 변인 → ND_REC는 순방향 가능 (ND_REC는 BW에서 AW 퇴근 후~취침 전 회복경험을 회고 측정)
   - BW 변인 ↔ BW 변인 (ND_SBR, ND_WM끼리): 동시점, 교차지연 가능
 
 ❌ 불가능:
-  - BW 변인 → AW 변인 (역방향, 시간 역행): ND_WM→t_EE 불가
+  - 같은 관찰쌍의 BW 변인 → AW 변인 (시간 역행): ND_WM_t→t_EE_t 불가
   - ND_REC ↔ ND_SBR 교차지연 불가 (둘 다 BW이지만 ND_REC는 전날 밤, ND_SBR은 현재 아침 → 이미 시간 선행이 있음)
   - jb_SQ (수면시간): 단방향 통제변인으로만 사용
 
 ⚠️ 주의:
-  - AW EE → BW WM: lag-1 순방향은 가능하지만, 역방향(BW WM → AW EE)은 불가
+  - AW EE → BW WM: lag-1 순방향은 가능. 같은 관찰쌍의 역방향(BW_t WM → AW_t EE)은 불가하며, 다음 관찰쌍(BW_t WM → AW_t+1 EE)은 별도 판단
+  - 다음 관찰쌍의 BW 변인 → AW 변인 (예: ND_WM_t→t_EE_t+1)는 시간 순방향이므로 같은 관찰쌍의 시간 역행 금지에 해당하지 않으며, 연구 질문과 실제 시간 배열을 별도로 확인
   - AW/BW 동시점 경로는 교차지연 가능하나, 이미 이론적 시간 선행이 확립된 경로는 재라그 불가
 """
 
@@ -82,7 +90,10 @@ EXISTING_PAPER_CONTEXT = """\
 기존 투고 논문 (WM paper):
   - 경로: 부당대우(MPF/MBS/MBC) → 정서적 소진(EE) → 일의 의미감(WM)
   - 조절: person-level 직무탈진(p_JB) (2단계 조절)
-  - 방법: MSEM (다층 구조방정식, 횡단)
+  - 설계·표본: 4주 AW-BW 일기연구, 268명, 3,917 관찰쌍 (WM 논문에 해당하며 연구 2의 N은 미정)
+  - 방법: Bayesian MSEM; 개인 내(within-person) 1-1-1 매개 경로와 개인수준 직무탈진의 교차수준 조절
+  - 분석 수준: 일일 변인의 within/between 성분을 latent centering으로 분해하고 개인 내 매개 경로를 random slopes로 추정
+  - 사실 확인 기준: .claude/context/research-profile.md의 WM paper 항목과 그 항목이 참조하는 Method 원문 (2026-09-22 대조)
   - 제외 이유: 이미 논문화된 주제 — 동일 경로를 DSEM으로 재검증하는 것도 차별성 부족
 
 → 아래 경로는 제안 금지:
