@@ -13,21 +13,59 @@ from config import (
     CLAUDE_MODEL,
     CLAUDE_TIMEOUT,
     CLAUDE_REQUEST_DELAY,
+    RESEARCH_TOPIC,
+    RESEARCH_THEORY,
+    RESEARCH_MODERATOR,
+    RESEARCH_POPULATION,
+    RESEARCH_METHOD,
+    RESEARCH_VARIABLES,
 )
 
 # ── 프롬프트 ──────────────────────────────────────────────────────────
+# RESEARCH_* 값(.env)이 채워져 있으면 해당 연구 주제에 맞춰 요약을 특화하고,
+# 비어 있으면(기본값) 주제와 무관한 범용 요약 모드로 동작한다.
+
+_HAS_RESEARCH_CONTEXT = bool(RESEARCH_TOPIC or RESEARCH_VARIABLES)
+
+
+def _context_block() -> str:
+    if not _HAS_RESEARCH_CONTEXT:
+        return ""
+    lines = ["[연구 맥락 — 이 논문의 활용 목적]"]
+    if RESEARCH_TOPIC:
+        lines.append(f"- 연구 주제: {RESEARCH_TOPIC}")
+    if RESEARCH_THEORY:
+        lines.append(f"- 이론 프레임: {RESEARCH_THEORY}")
+    if RESEARCH_MODERATOR:
+        lines.append(f"- 조절변인: {RESEARCH_MODERATOR}")
+    if RESEARCH_POPULATION:
+        lines.append(f"- 연구 대상: {RESEARCH_POPULATION}")
+    if RESEARCH_METHOD:
+        lines.append(f"- 분석 방법: {RESEARCH_METHOD}")
+    return "\n".join(lines) + "\n\n"
+
+
+def _connection_instruction() -> str:
+    if RESEARCH_VARIABLES:
+        return f"내 연구와의 연결점 (한국어: {RESEARCH_VARIABLES} 중 관련 개념)"
+    return "이 논문의 핵심 기여와 후속 연구에 주는 시사점 (한국어)"
+
+
+def _new_ideas_instruction() -> str:
+    if RESEARCH_VARIABLES:
+        return (
+            "변인사전.md 기반으로 변인 조합 구체적으로 제안 "
+            f"(한국어: 보유 변인인 {RESEARCH_VARIABLES} 등을 활용한 새로운 연구 설계 아이디어 3~5개. "
+            "각 아이디어는 '변인A → 변인B (조절: 변인C)' 형태로 구체적으로 제시)"
+        )
+    return "이 논문을 바탕으로 확장 가능한 후속 연구 아이디어 3~5개 (한국어, 자유 형식)"
+
 
 ANALYSIS_PROMPT = """\
-당신은 직업건강심리학(Occupational Health Psychology) 전문 연구자입니다.
+당신은 학술 논문을 분석하는 전문 연구 보조입니다.
 아래 논문을 읽고, 반드시 지정된 JSON 형식으로만 응답하세요. 다른 설명 없이 JSON만 출력하세요.
 
-[연구 맥락 — 이 논문의 활용 목적]
-- 연구 주제: 직장 내 부당대우 → 정서적 소진 → 일의 의미감의 매개 경로를, person-level 직무소진(job burnout)이 조절하는 조절된 매개 모형
-- 이론 프레임: COR theory (Hobfoll), JD-R model (Bakker & Demerouti)
-- 조절변인: 직무 소진 (job burnout, person-level)
-- 연구 대상: 한국 간호사/의료 종사자
-- 분석 방법: DSEM (다층 구조방정식모형), 일기 연구
-- 핵심 주장은 5~7개, 인용 문장은 4~5개 추출하세요.
+{context_block}- 핵심 주장은 5~7개, 인용 문장은 4~5개 추출하세요.
 - 조절 효과(moderating effect)가 있으면 반드시 별도로 추출하고, 없으면 "해당 없음"으로 표기하세요.
 
 [서지정보 (참고용)]
@@ -56,10 +94,10 @@ ANALYSIS_PROMPT = """\
   "key_claims_ko": ["핵심 주장 1 (한국어)", "주장 2", "주장 3", "주장 4", "주장 5"],
   "moderation": "조절 효과 관련 내용 (한국어: 조절변인, 조절 방향, 유의성 여부. 없으면 '해당 없음')",
   "method": "연구 방법론 요약 (한국어: 설계, 표본, 측정도구, 분석방법)",
-  "connection": "내 연구와의 연결점 (한국어: COR, JD-R, 부당대우, EE, WM, burnout, DSEM 중 관련 개념)",
+  "connection": "{connection_instruction}",
   "excerpts": ["직접 인용할 만한 영어 문장 1", "문장 2", "문장 3", "문장 4", "문장 5"],
   "tags": ["tag1", "tag2", "tag3"],
-  "new_research_ideas": "변인사전.md 기반으로 변인 조합 구체적으로 제안 (한국어: 보유 변인인 t_MPFs/MBSs/MBCs, t_EE, t_JC, ND_WM, ND_REC, ND_SBR, jb_SQ, p_JB, PSC, PCEO/PCEF 등을 활용한 새로운 연구 설계 아이디어 3~5개. 각 아이디어는 '변인A → 변인B (조절: 변인C)' 형태로 구체적으로 제시)"
+  "new_research_ideas": "{new_ideas_instruction}"
 }}
 """
 
@@ -165,6 +203,9 @@ def summarize_paper(paper: dict) -> dict:
     truncated = full_text[:MAX_TEXT_LENGTH]
 
     prompt = ANALYSIS_PROMPT.format(
+        context_block=_context_block(),
+        connection_instruction=_connection_instruction(),
+        new_ideas_instruction=_new_ideas_instruction(),
         file_name=paper.get("file_name", ""),
         meta_title=meta.get("title", ""),
         meta_author=meta.get("author", ""),

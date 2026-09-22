@@ -52,12 +52,22 @@ WRITING_ANALYSIS_DIR = Path(os.getenv(
     "WRITING_ANALYSIS_DIR",
     str(REFERENCE_ROOT.parent / "01. 논문 작성" / "writing_analysis"),
 ))
+PAPER_FOLDER_MAP = {
+    "dissertation": "00. 졸업 논문",
+    "WM paper": "01. 투고 논문 작성(WM)",
+}
+
+CURRENT_PAPER = os.getenv("CURRENT_PAPER", "WM paper")
+_paper_folder = PAPER_FOLDER_MAP.get(CURRENT_PAPER, CURRENT_PAPER)
+
+CURRENT_STUDY = os.getenv("CURRENT_STUDY", "")
+_study_subfolder = Path(CURRENT_STUDY) if CURRENT_STUDY else Path(".")
+
 SYNTHESIS_DIR = Path(os.getenv(
     "SYNTHESIS_DIR",
-    str(REFERENCE_ROOT.parent / "01. 논문 작성" / "00. 졸업 논문" / "gap_synthesis"),
+    str(REFERENCE_ROOT.parent / "01. 논문 작성" / _paper_folder / "gap_synthesis" / _study_subfolder),
 ))
 DRAFT_DIR    = Path(os.getenv("DRAFT_DIR", ""))
-CURRENT_PAPER = os.getenv("CURRENT_PAPER", "WM paper")
 
 # ── API 설정 ──────────────────────────────────────────────────────────
 ANTHROPIC_API_KEY   = _require_env("ANTHROPIC_API_KEY", "Anthropic API 키")
@@ -65,9 +75,23 @@ CLAUDE_MODEL        = os.getenv("CLAUDE_MODEL", "claude-opus-4-5")
 CLAUDE_TIMEOUT      = int(os.getenv("CLAUDE_TIMEOUT", "120"))
 CLAUDE_REQUEST_DELAY = float(os.getenv("CLAUDE_REQUEST_DELAY", "2.0"))
 
+# ── pdf_summarizer 연구 맥락 (선택) ──────────────────────────────────
+# 특정 논문 주제에 맞춰 요약을 커스터마이즈하려면 .env에 값을 채우세요.
+# 전부 비워두면 범용 요약 모드(주제 무관)로 동작합니다.
+RESEARCH_TOPIC      = os.getenv("RESEARCH_TOPIC", "")       # 예: 직장 내 부당대우 → 정서적 소진 → 일의 의미감 매개 경로
+RESEARCH_THEORY     = os.getenv("RESEARCH_THEORY", "")      # 예: COR theory, JD-R model
+RESEARCH_MODERATOR  = os.getenv("RESEARCH_MODERATOR", "")   # 예: 직무 소진 (job burnout, person-level)
+RESEARCH_POPULATION = os.getenv("RESEARCH_POPULATION", "")  # 예: 한국 간호사/의료 종사자
+RESEARCH_METHOD     = os.getenv("RESEARCH_METHOD", "")      # 예: DSEM (다층 구조방정식모형), 일기 연구
+RESEARCH_VARIABLES  = os.getenv("RESEARCH_VARIABLES", "")   # 예: t_MPFs/MBSs/MBCs, t_EE, t_JC, ND_WM, ND_REC, ND_SBR
+
 # ── 처리 대상 폴더 목록 ───────────────────────────────────────────────
-# pdf_summarizer 전용 (WM 논문용)
-PDF_TARGET_FOLDERS = ["WM"]
+# pdf_summarizer 전용: REFERENCE_ROOT 바로 아래 모든 하위 폴더를 자동으로 스캔한다.
+# (MD 출력 폴더와 숨김 폴더는 제외. 새 폴더를 추가해도 코드 수정 없이 자동으로 포함됨)
+PDF_TARGET_FOLDERS = sorted(
+    p.name for p in REFERENCE_ROOT.iterdir()
+    if p.is_dir() and not p.name.startswith(".") and p.name != MARKDOWN_DIR.name
+) if REFERENCE_ROOT.exists() else []
 
 # gap_explorer / gap_synthesizer 전용 (졸업논문 갭 탐색용)
 GAP_TARGET_FOLDERS = ["phd"]
