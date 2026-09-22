@@ -116,8 +116,13 @@ def extract_citations(md_path: Path) -> list:
                     citations.append(cit)
 
         # ── 서술형: Author et al. (Year) / Author and Author (Year) ──
-        # 괄호형 블록을 공백으로 마스킹해 이중 탐지 방지
-        masked = re.sub(r"\([^()]*\)", lambda m: " " * len(m.group()), line)
+        # 괄호형 블록(저자·연도 포함)만 공백으로 마스킹해 이중 탐지 방지.
+        # 단순 "(연도)"만 있는 괄호는 서술형 인용 탐지에 필요하므로 마스킹하지 않는다.
+        masked = re.sub(
+            r"\([^()]*\)",
+            lambda m: m.group() if re.fullmatch(r"\(\d{4}[a-z]?\)", m.group()) else " " * len(m.group()),
+            line,
+        )
 
         narr_re = re.compile(
             r"(?<!\w)"
