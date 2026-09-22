@@ -7,10 +7,10 @@
 
 ## 연구 맥락
 
-- **표본**: 한국 간호사 대상 일기연구 (AW-BW 교대 설계, 약 31일, N=284)
-- **기존 투고 논문 (WM paper)**: 부당대우 → 정서적 소진(EE) → 일의 의미감(WM), MSEM 분석
-- **졸업논문 방향**: DSEM으로 확장 — 시간 역동성, 자기회귀, 교차지연 구조 추가
-- **핵심 제약**: 부당대우→EE→WM 경로는 기존 논문과 겹치므로 졸업논문 모형에서 제외
+- **현재 기준**: 작업 전에 [.claude/context/research-profile.md](.claude/context/research-profile.md)의 현재 연구 방향과 연구별 표본을 읽는다. 과거 STRUCTURE.md나 코드의 고정 N을 현재 연구의 확정 사실로 사용하지 않는다.
+- **기존 투고 논문 (WM paper)**: 부당대우 → 정서적 소진(EE) → 일의 의미감(WM)의 개인 내 매개와 교차수준 조절을 검증한 일기연구, Bayesian MSEM.
+- **졸업논문 방향**: 연구 2 미확정. MSEM 모형 8(요구·자원크래프팅→EE→회복경험, PSC 1단계 조절)이 유력 후보이며 N은 미정이다. 기존 DSEM 탐색은 현재 기본 방향으로 전제하지 않는다 (2026-09-22 연구자 설명).
+- **핵심 제약**: 새 모형 제안 시 기존 WM 논문과의 중복 회피 규칙을 공통 프로필에서 확인한다. 기존 논문의 학위논문 편입 여부와 새 모형의 중복 회피를 구분한다.
 
 ---
 
@@ -41,6 +41,21 @@
 | `draft-reviewer` | 초안 섹션 4축 검토 (이론·인용·어조·구조) | `/review-draft` |
 | `coach-writing` | 논리 전개 방식 분석 → 글쓰기 코칭 | `/coach-writing` |
 | `structure-architect` | 논문 뼈대 설계·검증·STRUCTURE.md 관리 | `/outline-dissertation` 외 |
+| `peer-reviewer` | 논문 전체 피어리뷰 평가 (2-Pass, 5축) | `/peer-review` |
+
+---
+
+## coach-writing / draft-reviewer / peer-reviewer 사용 구분
+
+세 에이전트 모두 문단 단위 피드백을 주지만 판단 기준과 범위가 다르다:
+
+- **coach-writing** — 우수 논문(exemplar)과 비교해 논리 전개 패턴을 코칭. 내용(이론/인용이 맞는지)은 판단하지 않음. "논리 흐름이 안 잡힌다" 싶을 때 사용.
+- **draft-reviewer** — research-profile.md 기준 이론 적합성, 인용의 주장 뒷받침 여부, 학술 어조를 문단 단위로 감사. "이 이론 인용이 맞는지" 걱정될 때 사용.
+- **peer-reviewer** — 저널 피어리뷰 수준의 논문 전체 평가(기여도, 방법-결과 정합성, 과대해석, 대안 설명, 한계 충분성). "이 논문이 게재할 만큼 설득력 있나" 판단이 필요할 때 사용.
+
+peer-reviewer 실행 전, 관련 vault 자료(gap-explorer/lit-searcher 산출물)가 부족하면 먼저 그 에이전트들을 돌려서 vault를 채워둘 것. peer-reviewer는 기존 vault 파일만 참조하고 실시간 재검색은 하지 않음.
+
+헷갈리면: 비교 대상이 다른 논문이면 coach-writing, 비교 대상이 규칙/이론이면 draft-reviewer, 논문 전체의 설득력을 보고 싶으면 peer-reviewer.
 
 ---
 
