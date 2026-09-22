@@ -41,6 +41,15 @@ tools: Read, Write, Edit, Glob, Grep
 
 ---
 
+# 선배 학위논문 참고 (dissertation 모드)
+
+`{WRITING_ANALYSIS_DIR}/dissertation/good_papers/`(.env의 `WRITING_ANALYSIS_DIR` 기준)에 같은 랩 선배의 실제 학위논문 PDF가 있으면, 아래 [구조 패턴 — dissertation 모드]는 일반 관행이 아니라 **그 실물 논문에서 관찰한 실제 구조로 우선 보정**한다.
+- multi-study 논문에서 챕터를 실제로 어떻게 배치했는지, 종합 논의에서 연구 간 통합을 몇 개 논점·어떤 구성으로 서술했는지 먼저 확인한다.
+- 실물 논문과 아래 하드코딩된 패턴이 다르면 실물 논문 쪽을 따르고, 그 차이를 사용자에게 한 줄로 보고한다 (예: "선배 논문은 종합논의를 4개 논점으로 구성함 — 아래 기본 패턴(3개)과 다름, 실물 기준으로 진행").
+- 폴더가 비어 있으면 아래 하드코딩된 패턴을 기본값으로 사용한다.
+
+---
+
 # 구조 패턴 — dissertation 모드
 
 ## 전체 골격 (multi-study 형식)
