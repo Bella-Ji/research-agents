@@ -63,7 +63,9 @@ python3 -c "import fitz; print(fitz.open('PDF경로').page_count)"
 - `MSEM+moderation`: 다층 + cross-level interaction 필요
 - `기타`: 위 어디에도 해당하지 않는 경우
 
-**theories** — 다음 중 해당하는 것만: `COR`, `JD-R`, `Effort-Recovery`, `AET`, `Self-Regulation`, `Interpersonal Stressor`, `DSEM`
+**theories** — 다음 중 해당하는 것만: `COR`, `JD-R`, `Effort-Recovery`, `AET`, `Self-Regulation`, `Interpersonal Stressor`, `Meaning-Making`, `Meaningful-Work`, `DSEM`
+- `Meaning-Making`: 사람이 경험을 평가·해석하며 의미를 구성하는 과정(meaning-making perspective/model)을 이론 근거로 쓴 경우
+- `Meaningful-Work`: 일의 의미감의 개념 정의·차원·원천·형성 기제를 다루는 이론을 근거로 쓴 경우 (의미감을 단순 결과변인으로만 측정하고 이론 틀로 쓰지 않았으면 붙이지 않는다)
 
 **tags** — 주제 태그 3개 내외 (영문 소문자, 공백은 하이픈)
 

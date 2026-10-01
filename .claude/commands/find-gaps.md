@@ -1,9 +1,9 @@
 ---
-description: PDF 폴더에 대해 갭 탐색 3단계 파이프라인(gap-explorer → gap-synthesizer → gap-strategist)을 자동 실행한다
+description: PDF 폴더에 대해 갭 탐색 3단계 파이프라인(gap-explorer → gap-synthesizer → gap-strategist)을 자동 실행해, 박사논문(WM 연구)이 메우는 갭을 매핑한다
 argument-hint: "[PDF 폴더 경로] (생략 시 phd 폴더 전체) [--force]"
 ---
 
-갭 탐색 3단계 파이프라인을 자동 실행한다: 논문별 갭 추출 → 갭 지형 지도 → 연구 모형 제안.
+갭 탐색 3단계 파이프라인을 자동 실행한다: 논문별 갭 추출 → 갭 지형 지도 → 박사논문(WM 연구)이 메우는 갭 매핑. 새 모형 제안은 하지 않는다(2026-10-01 변경).
 
 ## 경로 설정 (config.py / .env 기준)
 
@@ -33,7 +33,7 @@ argument-hint: "[PDF 폴더 경로] (생략 시 phd 폴더 전체) [--force]"
 2. **gap-synthesizer 서브에이전트를 1개 실행** (`subagent_type: gap-synthesizer`). 프롬프트에 갭분석 파일 목록(절대경로)을 전달
 3. 생성된 `gap_landscape_*.md` 경로를 확보
 
-### Step 3 — gap-strategist (모형 제안)
+### Step 3 — gap-strategist (박사논문 갭 매핑)
 
 1. **gap-strategist 서브에이전트를 1개 실행** (`subagent_type: gap-strategist`). 프롬프트에 Step 2에서 생성된 landscape 파일의 절대경로를 전달
 2. 생성된 `gap_strategy_*.md` 경로를 확보
@@ -44,7 +44,7 @@ argument-hint: "[PDF 폴더 경로] (생략 시 phd 폴더 전체) [--force]"
 - 처리한 PDF 수 / 스킵한 PDF 수
 - 생성된 갭분석 파일 목록
 - landscape 파일 경로와 갭 군집 수
-- strategy 파일 경로, 제안 모형 목록, 최우선 추천 모형
+- strategy 파일 경로, Full/Partial/None 군집 수, 기여 주장 후보 목록, 메우지 못한 갭 수
 
 ## 주의
 

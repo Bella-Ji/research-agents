@@ -1,16 +1,14 @@
 # research-agents — CLAUDE.md
 
-박사 졸업논문 작성을 위한 연구 자동화 에이전트 모음.
-이 프로젝트에서 작업할 때 이 파일을 먼저 읽을 것.
+박사 졸업논문 작성을 위한 연구 자동화 에이전트 모음. 공통 연구 맥락과 글쓰기 규칙은 상위 폴더 `0. 졸업논문 준비/CLAUDE.md`에 있다.
 
 ---
 
 ## 연구 맥락
 
-- **현재 기준**: 작업 전에 [.claude/context/research-profile.md](.claude/context/research-profile.md)의 현재 연구 방향과 연구별 표본을 읽는다. 과거 STRUCTURE.md나 코드의 고정 N을 현재 연구의 확정 사실로 사용하지 않는다.
-- **기존 투고 논문 (WM paper)**: 부당대우 → 정서적 소진(EE) → 일의 의미감(WM)의 개인 내 매개와 교차수준 조절을 검증한 일기연구, Bayesian MSEM.
-- **졸업논문 방향**: 연구 2 미확정. MSEM 모형 8(요구·자원크래프팅→EE→회복경험, PSC 1단계 조절)이 유력 후보이며 N은 미정이다. 기존 DSEM 탐색은 현재 기본 방향으로 전제하지 않는다 (2026-09-22 연구자 설명).
-- **핵심 제약**: 새 모형 제안 시 기존 WM 논문과의 중복 회피 규칙을 공통 프로필에서 확인한다. 기존 논문의 학위논문 편입 여부와 새 모형의 중복 회피를 구분한다.
+- **현재 기준**: 작업 전에 [.claude/context/research-profile.md](.claude/context/research-profile.md)의 현재 연구 방향과 표본을 읽는다.
+- **박사논문 = WM 논문 단일 연구 (2026-10-01 확정)**: 부당대우 → 정서적 소진(EE) → 일의 의미감(WM)의 개인 내 매개와 직무소진의 교차수준 조절을 검증한 일기연구(Bayesian MSEM, N = 268). JOHP 투고 완료(2026-07), 최종본은 `01. 논문 작성/01. 투고 논문 작성(WM)/submission/Meaning_submission.docx`. 박사논문은 이를 개념 정의부터 더 깊게 확장하고, 방법·결과 수치는 투고본을 유지한다.
+- **이 에이전트 세트의 기본 대상은 박사논문(WM)이다.** MSEM 모형 8(크래프팅 → EE → 회복경험)은 별도 투고 트랙이며, 그 논문 작업 시 context 파일을 따로 재설정한다. 과거 DSEM 탐색은 현재 방향이 아니다.
 
 ---
 
@@ -34,11 +32,11 @@
 |---|---|---|
 | `gap-explorer` | PDF 1편 → Limitations/Future Research 갭 추출 | `/find-gaps` (1단계) |
 | `gap-synthesizer` | 갭분석.md 여러 개 → 공통 패턴 군집화 | `/find-gaps` (2단계) |
-| `gap-strategist` | gap landscape → 연구 모형 제안 | `/find-gaps` (3단계) |
+| `gap-strategist` | gap landscape → 박사논문(WM)이 메우는 갭 매핑 | `/find-gaps` (3단계) |
 | `pdf-summarizer` | PDF 1편 → Obsidian 요약 MD 생성 | `/summarize-pdf` |
 | `lit-searcher` | vault *_요약.md Grep → 키워드 문헌 탐색·합성 | `/search-lit` |
 | `citation-checker` | APA 7판 인용 형식 검사 (스크립트 + 정리) | `/check-citations` |
-| `draft-reviewer` | 초안 섹션 4축 검토 (이론·인용·어조·구조) | `/review-draft` |
+| `draft-reviewer` | 초안 섹션 5축 검토 (이론·인용·어조·구조·투고본 일치) | `/review-draft` |
 | `coach-writing` | 논리 전개 방식 분석 → 글쓰기 코칭 | `/coach-writing` |
 | `structure-architect` | 논문 뼈대 설계·검증·STRUCTURE.md 관리 | `/outline-dissertation` 외 |
 | `peer-reviewer` | 논문 전체 피어리뷰 평가 (2-Pass, 5축) | `/peer-review` |
@@ -50,7 +48,7 @@
 세 에이전트 모두 문단 단위 피드백을 주지만 판단 기준과 범위가 다르다:
 
 - **coach-writing** — 우수 논문(exemplar)과 비교해 논리 전개 패턴을 코칭. 내용(이론/인용이 맞는지)은 판단하지 않음. "논리 흐름이 안 잡힌다" 싶을 때 사용.
-- **draft-reviewer** — research-profile.md 기준 이론 적합성, 인용의 주장 뒷받침 여부, 학술 어조를 문단 단위로 감사. "이 이론 인용이 맞는지" 걱정될 때 사용.
+- **draft-reviewer** — research-profile.md 기준 이론 적합성, 인용의 주장 뒷받침 여부, 학술 어조, WM 투고본과의 수치·표현 일치를 문단 단위로 감사. "이 이론 인용이 맞는지" 걱정될 때 사용.
 - **peer-reviewer** — 저널 피어리뷰 수준의 논문 전체 평가(기여도, 방법-결과 정합성, 과대해석, 대안 설명, 한계 충분성). "이 논문이 게재할 만큼 설득력 있나" 판단이 필요할 때 사용.
 
 peer-reviewer 실행 전, 관련 vault 자료(gap-explorer/lit-searcher 산출물)가 부족하면 먼저 그 에이전트들을 돌려서 vault를 채워둘 것. peer-reviewer는 기존 vault 파일만 참조하고 실시간 재검색은 하지 않음.
@@ -59,19 +57,22 @@ peer-reviewer 실행 전, 관련 vault 자료(gap-explorer/lit-searcher 산출�
 
 ---
 
-## 자연어 트리거 → 슬래시 커맨드 라우팅
+## 요청에 맞는 커맨드
 
-아래 트리거 문구가 나오면 해당 커맨드로 즉시 라우팅한다.
+아래 요청은 해당 커맨드로 처리한다. 커맨드는 서브에이전트를 띄우고 파일을 만드는 무거운 작업이다. 그래서 문장 하나나 문단 하나에 대한 짧은 의견처럼 가벼운 요청은 직접 답하고, 커맨드로 돌릴지는 한 줄로 물어본다.
 
-| 트리거 문구 | 라우팅 |
+| 요청 예 | 커맨드 |
 |---|---|
-| "이 논문 요약해줘", "PDF 요약" | `/summarize-pdf` |
-| "갭 찾아줘", "연구 갭", "gap 분석" | `/find-gaps` |
-| "관련 논문 찾아줘", "문헌 탐색", "vault 검색" | `/search-lit` |
-| "인용 검사", "APA 형식", "citation 확인" | `/check-citations` |
-| "초안 검토", "draft 검토", "논문 피드백" | `/review-draft` |
-| "글쓰기 코칭", "논리 분석", "writing coach" | `/coach-writing` |
-| "논문 구조", "아웃라인", "챕터 구성" | `/outline-dissertation` |
+| PDF 요약 | `/summarize-pdf` |
+| 연구 갭 찾기, gap 분석 | `/find-gaps` |
+| 관련 논문 찾기, vault 문헌 탐색 | `/search-lit` |
+| APA 인용 형식 검사 | `/check-citations` |
+| 초안 섹션 검토 | `/review-draft` |
+| 논리 전개 방식 코칭 | `/coach-writing` |
+| 논문 전체 피어리뷰 | `/peer-review` |
+| 학위논문 아웃라인·챕터 구성 | `/outline-dissertation` |
+| 가설-이론-결과-논의 매핑 점검 | `/check-flow` |
+| 집필 진행 상황을 STRUCTURE.md에 반영 | `/update-structure` |
 
 ---
 
@@ -85,6 +86,10 @@ peer-reviewer 실행 전, 관련 vault 자료(gap-explorer/lit-searcher 산출�
 | `/check-citations "경로"` | MD 파일 또는 폴더 | 심각도별 오류 목록 + 수정안 |
 | `/review-draft "경로" [섹션]` | 초안 MD + 섹션명 | `*_review_YYYYMMDD.md` |
 | `/coach-writing --analyze\|--multi\|--revise` | 모드별 인자 | `*_writing_analysis.md` / `multi_coaching_*.md` / `revise_output.md` |
+| `/peer-review "경로" [모드] [Pass]` | 논문 MD, dissertation\|journal-article, 1\|2 | 5축 리뷰 보고서 (Pass 1 후 사용자 승인) |
+| `/outline-dissertation` | 없음 | STRUCTURE.md 아웃라인 |
+| `/check-flow` | 없음 | 매핑 점검 보고 |
+| `/update-structure` | 진행 사항 | STRUCTURE.md status 갱신 |
 
 ---
 
@@ -111,7 +116,7 @@ PDF 논문들
     ↓  [gap-synthesizer]  주제별로 묶어서
 gap_landscape_*.md (갭 지형 지도)
     ↓  [gap-strategist]  지형 지도를 보고
-gap_strategy_*.md (연구 모형 제안)
+gap_strategy_*.md (박사논문이 메우는 갭 매핑)
 ```
 
 처리 대상 폴더: `config.py`의 `GAP_TARGET_FOLDERS = ["phd"]`.
@@ -132,9 +137,9 @@ gap_strategy_*.md (연구 모형 제안)
 
 ---
 
-## 기존 Python 시스템 (병행 기간 참고)
+## 기존 Python 시스템
 
-마이그레이션 기간 동안 Python 시스템(`run.py`)도 사용 가능하다.
+슬래시 커맨드 이전에 쓰던 `run.py`도 남아 있다. 같은 작업이면 슬래시 커맨드를 우선한다.
 
 ```bash
 python3 run.py gap --batch                   # PDF 일괄 갭 분석

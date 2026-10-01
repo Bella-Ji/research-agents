@@ -30,7 +30,7 @@ tools: Read, Write, Bash, Glob, Grep
 
 | 모드 | 대상 | 리뷰 단위 |
 |---|---|---|
-| `dissertation` | 박사학위논문 (multi-study) | 연구(Study) 단위로 유연하게 — 전체 또는 지정된 연구만. 서론 약속↔논의 대응은 각 연구 수준과 종합 논의 수준 모두 점검 |
+| `dissertation` | 박사학위논문 (연구 개수는 research-profile.md 기준, 현재 WM 연구 단일 연구 5장 체제) | 전체 또는 지정된 챕터. 서론 약속↔논의 대응과 서론→이론적 배경→가설→결과→논의의 논리 연결을 점검. 투고본을 확장한 경우 방법·결과 수치가 투고본(WM paper CLAUDE.md)과 일치하는지 축 2에서 확인. 여러 연구일 때만 연구 단위·종합 논의 수준으로 나눠 점검 |
 | `journal-article` | 저널 투고 논문 (single-study) | 논문 전체 (Title/Abstract부터 Limitations까지) |
 
 ## 2-Pass 구조 (필수 — 승인 게이트)

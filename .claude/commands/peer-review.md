@@ -10,7 +10,7 @@ argument-hint: "[논문 파일 경로] [모드: dissertation|journal-article (�
 
 `$ARGUMENTS`
 
-- 첫 번째 인자: 논문 MD 파일 절대경로 (dissertation의 경우 특정 연구만 리뷰하려면 "연구2" 등 범위 함께 전달)
+- 첫 번째 인자: 논문 MD 파일 절대경로 (dissertation의 경우 특정 챕터만 리뷰하려면 "Ⅱ장" 등 범위 함께 전달)
 - 두 번째 인자 (선택): 모드 — `dissertation` 또는 `journal-article`
 - 세 번째 인자 (선택): Pass 번호 — `1`(기본) 또는 `2`
 

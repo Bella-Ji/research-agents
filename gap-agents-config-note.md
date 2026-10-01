@@ -40,7 +40,11 @@ CURRENT_PAPER=dissertation
 CURRENT_PAPER="WM paper" python3 run.py gap-synthesize
 ```
 
-## 나중에 졸업논문 안에서 연구가 여러 개(연구1, 연구2...)로 나뉘면
+## [2026-10-01] CURRENT_STUDY는 사용하지 않음
+박사논문이 WM 연구 단일 연구로 확정되어 연구1/연구2 분리가 없다. `.env`에 `CURRENT_STUDY`를 넣지 않고 그대로 둔다(산출물은 `00. 졸업 논문/gap_synthesis/`에 바로 저장). 슬래시 커맨드(`/find-gaps`)는 이 값을 읽지 않는다.
+아래는 과거 안내로, 참고용으로만 남긴다.
+
+## (과거 안내) 나중에 졸업논문 안에서 연구가 여러 개(연구1, 연구2...)로 나뉘면
 `.env`에 한 줄만 추가 (config.py는 다시 안 건드려도 됨):
 
 ```
